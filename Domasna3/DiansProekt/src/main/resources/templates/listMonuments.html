@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Cultural and Historic Monuments in Macedonia</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        main {
+            margin-top: 20px;
+            text-align: center; /* Center align content in main */
+        }
+
+        table {
+            width: 100%;
+            border: 1px solid #333;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #555;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background-color: #555;
+        }
+
+        .search-btn {
+            margin-top: 20px;
+        }
+        .map-btn
+        {
+            margin-top: 30px;
+        }
+        .map-btn a
+        {
+            width: 150px;
+        }
+        #showMoreBtn {
+            padding: 10px 20px;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #showMoreBtn:hover {
+            background-color: #777;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <h1>Cultural and Historic Monuments in Macedonia</h1>
+</header>
+<main>
+    <div>
+        <table>
+            <thead>
+            <tr><th>Details</th><th>Name</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="monument, stat : ${monuments}" th:if="${stat.index < 10}">
+                <td><a th:href="@{'/details/{id}' (id=${monument.getId()})}">Details</a></td>
+                <td th:text="${monument.getName()}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <button id="showMoreBtn" onclick="showMore()">Show More</button>
+    </div>
+
+
+    <div class="search-btn">
+        <h2>Search monument:</h2>
+        <a href="/search" class="btn">Search</a>
+    </div>
+    <div class="map-btn">
+        <a href="/map" class="btn">View map</a>
+    </div>
+
+</main>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var monuments = /*[[${monuments}]]*/ [];
+
+    function showMore() {
+        var tableBody = document.querySelector('tbody');
+        var currentRowCount = tableBody.querySelectorAll('tr').length;
+
+        for (var i = currentRowCount; i < currentRowCount + 10; i++) {
+            if (i < monuments.length) {
+                var monument = monuments[i];
+                var newRow = document.createElement('tr');
+                newRow.innerHTML = '<td><a href="/details/' + monument.id + '">Details</a></td>' +
+                    '<td>' + monument.name + '</td>';
+                tableBody.appendChild(newRow);
+            } else {
+                /* No more monuments to show, hide the button */
+                document.getElementById('showMoreBtn').style.display = 'none';
+                break;
+            }
+        }
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Heritage Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <style>
+        #map {
+            height: 500px;
+        }
+        .btn
+        {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #555;
+        }
+        a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        a:hover {
+            color: #555;
+        }
+
+    </style>
+</head>
+<body>
+<div id="home-btn">
+    <a href="/" class="btn">Back to main page</a>
+</div>
+<h1>Cultural Heritage Map</h1>
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var map = L.map('map').setView([42.0, 21.7], 8);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        fetch('https://raw.githubusercontent.com/LorenBosh/DIANS/main/Domasna3/Database/schema.sql')
+            .then(response => response.text())
+            .then(sqlContent => {
+                const monuments = parseSqlToJSON(sqlContent);
+
+                monuments.forEach(monument => {
+                    L.marker([monument.Latitude, monument.Longitude])
+                        .addTo(map)
+                        .bindPopup(`<b>${monument.Name}</b><br>${monument.Adress}<br>${monument.Heritage_Type}`);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    });
+    function parseSqlToJSON(sqlContent) {
+        const jsonData = [];
+        const lines = sqlContent.split('\n');
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            if (line.startsWith('\\.')) {
+                break;
+            }
+            const values = line.split('\t');
+
+            const latitude = parseFloat(values[5]);
+            const longitude = parseFloat(values[4]);
+
+            if (!isNaN(latitude) && !isNaN(longitude)) {
+                const monument = {
+                    OSM_ID: parseInt(values[0]),
+                    Name: values[1],
+                    Country: values[2],
+                    City: values[3],
+                    Longitude: longitude,
+                    Latitude: latitude,
+                    Adress: values[6],
+                    Heritage_Type: values[7],
+                    Opening_Hours: values[8],
+                    Email_adress: values[9],
+                    Phone: values[10],
+                };
+                jsonData.push(monument);
+            }
+        }
+
+        return jsonData;
+    }
+
+</script>
+</body>
+</html>

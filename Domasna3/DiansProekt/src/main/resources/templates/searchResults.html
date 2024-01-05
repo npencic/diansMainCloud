@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    #div_2 {
+      width: 800px;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    span {
+      margin-right: 10px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    a:hover {
+      color: #555;
+    }
+    #div_2
+    {
+      margin-top: 40px;
+    }
+    #home-btn {
+      display: block;
+      position: absolute;
+      top: 5px;
+      left: 10px;
+      font-family: "Times New Roman", sans-serif;
+      font-size: medium;
+    }
+
+    .btn {
+      background-color: #333;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+
+
+  </style>
+</head>
+<body>
+<div id="home-btn">
+  <a href="/" class="btn">Back to main page</a>
+</div>
+<div id="div_2">
+  <h2>Search Results:</h2>
+  <ul>
+    <li th:each="monument : ${monuments}">
+      <span th:text="${monument.name}"></span>
+      <span th:text="${monument.city}"></span>
+      <span th:text="${monument.type}"></span>
+      <span><a th:href="@{'/details/{id}' (id=${monument.getId()})}">Details</a></span>
+    </li>
+  </ul>
+</div>
+</body>
+</html>

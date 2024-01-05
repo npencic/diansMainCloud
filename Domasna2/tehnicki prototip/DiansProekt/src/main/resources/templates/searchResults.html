@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    div {
+      width: 800px;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    span {
+      margin-right: 10px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    a:hover {
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <h2>Search Results:</h2>
+  <ul>
+    <li th:each="monument : ${monuments}">
+      <span th:text="${monument.name}"></span>
+      <span th:text="${monument.city}"></span>
+      <span th:text="${monument.type}"></span>
+      <span><a th:href="@{'/monuments/details/{id}' (id=${monument.getId()})}">Details</a></span>
+    </li>
+  </ul>
+</div>
+</body>
+</html>

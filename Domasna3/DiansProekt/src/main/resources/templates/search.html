@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search</title>
+
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"], input[type="radio"], button {
+      margin-bottom: 15px;
+      display: inline-block; /* Make radio buttons and buttons appear in a row */
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #333333;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    .radio-group {
+      display: flex;
+    }
+    #home-btn
+    {
+      position: absolute;
+    }
+    .btn
+    {
+      background-color: gray;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #555;
+    }
+    a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+    a:hover {
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+<div id="home-btn">
+  <a href="/" class="btn">Back to main page</a>
+</div>
+<header>
+  <h1>Search monuments in Macedonia</h1>
+</header>
+
+<!-- Search by Name -->
+<form method="post" th:action="@{/search/search1}">
+  <label for="name">Search by Name:</label>
+  <input type="text" name="name" id="name">
+  <button type="submit" name="searchName">Search</button>
+
+  <label for="city">Search by City:</label>
+  <input type="text" name="name" id="city">
+  <button type="submit" name="searchCity">Search</button>
+
+  <label>Type:</label>
+  <div class="radio-group">
+    <input type="radio" name="type" value="museum" id="museum">
+    <label for="museum">Museum</label>
+    <input type="radio" name="type" value="monument" id="monument">
+    <label for="monument">Monument</label>
+    <input type="radio" name="type" value="archaeological_site" id="archaeological_site">
+    <label for="archaeological_site">Archaeological Site</label>
+    <input type="radio" name="type" value="church" id="church">
+    <label for="church">Church</label>
+  </div>
+
+</form>
+
+
+<!--<form method="get" th:action="@{/search/search3}">-->
+<!--  <label>Type:</label>-->
+<!--  <input type="radio" name="type" value="museum" id="museum">-->
+<!--  <label for="museum">Museum</label>-->
+<!--  <input type="radio" name="type" value="monument" id="monument">-->
+<!--  <label for="monument">Monument</label>-->
+<!--  <input type="radio" name="type" value="archeological_site" id="archeological_site">-->
+<!--  <label for="archeological_site">Archeological Site</label>-->
+<!--  <input type="radio" name="type" value="church" id="church">-->
+<!--  <label for="church">Church</label>-->
+<!--</form>-->
+
+
+
+<!--<script>-->
+<!--  window.onload = function() {-->
+<!--    function funkc(){-->
+<!--      var lista=document.getElementById("lista").value;-->
+<!--      var search1=document.getElementById("search1").value;-->
+<!--      var search2=document.getElementById("search2").value;-->
+
+<!--      if (search1 === "" && search2 === "") {-->
+<!--        lista.style.display = "none"; // Hide the list-->
+<!--        alert("Vnesete podatoci");-->
+<!--        return;-->
+<!--      } else {-->
+<!--        lista.style.display = "block"; // Show the list-->
+<!--      }-->
+<!--    }-->
+<!--  };-->
+<!--</script>-->
+
+</body>
+</html>
